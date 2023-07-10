@@ -32,7 +32,7 @@ const TodoListComponent = () => {
                     />
                 ))}
             </ul>
-            <p className="my-10 flex items-center justify-center gap-2 text-xl">
+            <p className="my-10 flex items-center justify-center gap-2 text-xl dark:text-light">
                 <AiOutlineBell />
                 <span className="cursor-default">
                     you have {result.length} left todos!

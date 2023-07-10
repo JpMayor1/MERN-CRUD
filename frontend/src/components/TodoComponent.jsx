@@ -29,7 +29,7 @@ const TodoComponent = () => {
                     placeholder="Ex. Buy Groceries"
                 />
                 <button
-                    className="bg-light-primary1 hover:bg-light-primary2 border border-light-primary1 py-1 px-1 rounded-lg w-32 dark:bg-gradient-bg-dark1 dark:text-light dark:hover:bg-dark-primary2 dark:border-gradient-bg-dark1"
+                    className="bg-light-primary1 hover:bg-light-primary2 border border-light-primary1 py-1 px-1 rounded-lg w-32 dark:bg-gradient-bg-dark1 dark:text-light dark:hover:bg-dark-primary2 dark:border-gradient-bg-dark1 hover:dark:text-gradient-bg-dark1"
                     onClick={addTodo}
                 >
                     Add List

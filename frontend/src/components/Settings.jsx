@@ -4,6 +4,7 @@ import useThemeSwitcher from "../hooks/useThemeSwitches";
 import { MoonIcon, SunIcon } from "./icons";
 
 const Settings = () => {
+    const username = localStorage.getItem("username");
     const logOut = () => {
         window.localStorage.removeItem("userId");
         window.location.href = "/login";
@@ -28,7 +29,7 @@ const Settings = () => {
                 </button>
             </div>
             <div className="flex justify-center items-center gap-3 cursor-default">
-                <CgProfile /> <p className="text-[20px]">James</p>
+                <CgProfile /> <p className="text-[20px]">{username}</p>
             </div>
             <div
                 className="flex justify-center items-center gap-3 cursor-pointer"

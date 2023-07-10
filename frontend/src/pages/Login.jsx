@@ -15,6 +15,8 @@ const Login = () => {
                 password,
             });
             const userId = res.data._id;
+            const username = res.data.username;
+            localStorage.setItem("username", username);
             localStorage.setItem("userId", userId);
             window.location.href = "/";
         } catch (err) {
