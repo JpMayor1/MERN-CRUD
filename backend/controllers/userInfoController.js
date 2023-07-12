@@ -1,7 +1,7 @@
 const userSchema = require("../models/UserSchema");
 
 module.exports.getUserInfo = async (req, res) => {
-    const username = req.body.username;
+    const {username} = req.params;
     try {
         const user = await userSchema.findOne({ username });
         if (user) {

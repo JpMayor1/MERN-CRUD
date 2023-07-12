@@ -25,16 +25,35 @@ module.exports.getTodo = async (req, res) => {
     }
 };
 
-// Update todo
+// Update todo text
 module.exports.updateTodo = async (req, res) => {
     try {
         const { _id } = req.params;
-        const { text, completed } = req.body;
+        const { text } = req.body;
         const todo = await todoSchema.findOneAndUpdate(
             {
                 _id,
             },
-            { text, completed },
+            { text },
+            { new: true }
+        );
+        res.status(200).json({ message: "Todo Updated", todo });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Error Updating Todo" });
+    }
+};
+
+// Update todo complete
+module.exports.updateTodoCompleted = async (req, res) => {
+    try {
+        const { _id } = req.params;
+        const { completed } = req.body;
+        const todo = await todoSchema.findOneAndUpdate(
+            {
+                _id,
+            },
+            { completed },
             { new: true }
         );
         res.status(200).json({ message: "Todo Updated", todo });

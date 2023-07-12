@@ -6,7 +6,8 @@ import { MoonIcon, SunIcon } from "./icons";
 const Settings = () => {
     const username = localStorage.getItem("username");
     const logOut = () => {
-        window.localStorage.removeItem("userId");
+        window.localStorage.removeItem("token");
+        window.localStorage.removeItem("username");
         window.location.href = "/login";
     };
     const [mode, setMode] = useThemeSwitcher();

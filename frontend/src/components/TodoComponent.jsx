@@ -1,16 +1,54 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { toast, Toaster } from "react-hot-toast";
+
 const TodoComponent = () => {
-    const userId = localStorage.getItem("userId");
+    const [todoId, setTodoId] = useState("");
     const [text, setText] = useState("");
+
+    useEffect(() => {
+        const username = localStorage.getItem("username");
+
+        const getTodoId = async () => {
+            try {
+                await axios
+                    .get(`http://localhost:5000/user/${username}`, {
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem(
+                                "token"
+                            )}`,
+                        },
+                    })
+                    .then((res) => {
+                        setTodoId(res.data);
+                    });
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        getTodoId();
+    }, []);
 
     const addTodo = async () => {
         try {
-            await axios.post("http://localhost:5000/todos/add", {
-                userId,
-                text,
-            });
-            window.location.reload();
+            await axios.post(
+                "http://localhost:5000/todos/add",
+                {
+                    todoId,
+                    text,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem(
+                            "token"
+                        )}`,
+                    },
+                }
+            );
+            toast.success("Todo added!");
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000); // 1 seconds delay
         } catch (error) {
             console.log(error);
         }
@@ -35,6 +73,22 @@ const TodoComponent = () => {
                     Add List
                 </button>
             </div>
+            <Toaster
+                toastOptions={{
+                    success: {
+                        style: {
+                            background: "green",
+                            color: "white",
+                        },
+                    },
+                    error: {
+                        style: {
+                            background: "red",
+                            color: "white",
+                        },
+                    },
+                }}
+            />
         </div>
     );
 };

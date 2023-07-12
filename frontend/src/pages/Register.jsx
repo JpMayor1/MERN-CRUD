@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { toast, Toaster } from "react-hot-toast";
 import axios from "axios";
+import { v4 as uuid } from "uuid";
+
 
 const Register = () => {
     const isLoggedIn = localStorage.getItem("userId");
@@ -9,14 +11,16 @@ const Register = () => {
         const name = e.target.name.value;
         const email = e.target.email.value;
         const password = e.target.password.value;
+        const todoId = uuid();
         try {
             await axios.post("http://localhost:5000/register", {
                 username: name,
                 email,
                 password,
+                todoId,
             });
 
-            window.location.href = "/login";
+            toast.success("Account created successfully!");
         } catch (err) {
             toast.error(err.response.data.message);
             console.log(err);

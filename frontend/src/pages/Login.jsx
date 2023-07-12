@@ -3,8 +3,6 @@ import { toast, Toaster } from "react-hot-toast";
 import axios from "axios";
 
 const Login = () => {
-    const isLoggedIn = localStorage.getItem("userId");
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         const email = e.target.email.value;
@@ -14,18 +12,15 @@ const Login = () => {
                 email,
                 password,
             });
-            const userId = res.data._id;
-            const username = res.data.username;
-            localStorage.setItem("username", username);
-            localStorage.setItem("userId", userId);
+
+            localStorage.setItem("token", res.data.token);
+            localStorage.setItem("username", res.data.username);
             window.location.href = "/";
         } catch (err) {
             toast.error(err.response.data.message);
             console.log(err);
         }
     };
-
-    if (isLoggedIn) window.location.href = "/";
 
     return (
         <>

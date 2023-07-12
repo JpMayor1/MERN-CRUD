@@ -9,6 +9,6 @@ const { getUserInfo } = require("../controllers/userInfoController");
 // User Routes
 userRouter.post("/register", registerUser);
 userRouter.post("/login", loginUser);
-userRouter.get("/user", isLoggedIn, getUserInfo);
+userRouter.get("/user/:username", isLoggedIn, getUserInfo);
 
 module.exports = userRouter;
