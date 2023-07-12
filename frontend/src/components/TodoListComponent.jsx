@@ -32,11 +32,11 @@ const TodoListComponent = () => {
                     />
                 ))}
             </ul>
-            <p className="my-10 flex items-center justify-center gap-2 text-xl dark:text-light">
+            <p className="my-10 flex items-center justify-center gap-2 dark:text-light">
                 <AiOutlineBell />
-                <span className="cursor-default">
+                <i className="cursor-default">
                     you have {result.length} left todos!
-                </span>
+                </i>
             </p>
         </div>
     );
