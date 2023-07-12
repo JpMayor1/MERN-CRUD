@@ -57,7 +57,7 @@ const TodoListComponent = () => {
         getTodo();
     }, [todoId]);
     return (
-        <div className="max-w-[500px] min-w-[300px] w-[450px] h-fit text-center">
+        <div className="max-w-[420px] w-full h-fit text-center px-2">
             <ul className="flex flex-col items-start gap-3">
                 {todo.map((todo) => (
                     <TodoListItemComponent

@@ -55,8 +55,8 @@ const TodoComponent = () => {
     };
 
     return (
-        <div>
-            <div className="flex gap-2 max-w-[500px] min-w-[300px] w-[450px] h-fit bg-light-primary2 rounded-3xl p-3 dark:bg-dark-primary2">
+        <div className="px-1">
+            <div className="flex gap-2 max-w-[420px] w-full h-fit bg-light-primary2 rounded-3xl p-3 dark:bg-dark-primary2">
                 <input
                     type="text"
                     name="addtodo"
