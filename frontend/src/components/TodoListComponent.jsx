@@ -14,13 +14,16 @@ const TodoListComponent = () => {
         const getTodoId = async () => {
             try {
                 await axios
-                    .get(`http://localhost:5000/user/${username}`, {
-                        headers: {
-                            Authorization: `Bearer ${localStorage.getItem(
-                                "token"
-                            )}`,
-                        },
-                    })
+                    .get(
+                        `https://mern-crud-cv64.onrender.com/user/${username}`,
+                        {
+                            headers: {
+                                Authorization: `Bearer ${localStorage.getItem(
+                                    "token"
+                                )}`,
+                            },
+                        }
+                    )
                     .then((res) => {
                         setTodoId(res.data);
                     });
@@ -32,7 +35,7 @@ const TodoListComponent = () => {
         const getTodo = async () => {
             try {
                 const res = await axios.get(
-                    `http://localhost:5000/todos/${todoId}`,
+                    `https://mern-crud-cv64.onrender.com/todos/${todoId}`,
                     {
                         headers: {
                             Authorization: `Bearer ${localStorage.getItem(

@@ -3,7 +3,6 @@ import { toast, Toaster } from "react-hot-toast";
 import axios from "axios";
 import { v4 as uuid } from "uuid";
 
-
 const Register = () => {
     const isLoggedIn = localStorage.getItem("userId");
     const handleSubmit = async (e) => {
@@ -13,7 +12,7 @@ const Register = () => {
         const password = e.target.password.value;
         const todoId = uuid();
         try {
-            await axios.post("http://localhost:5000/register", {
+            await axios.post("https://mern-crud-cv64.onrender.com/register", {
                 username: name,
                 email,
                 password,

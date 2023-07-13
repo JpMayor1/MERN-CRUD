@@ -28,7 +28,7 @@ const TodoListItemComponent = ({ id, text, completed }) => {
         const updateCompleted = async () => {
             try {
                 await axios.put(
-                    `http://localhost:5000/todos/update/completed/${id}`,
+                    `https://mern-crud-cv64.onrender.com/todos/update/completed/${id}`,
                     {
                         completed: iscompleted,
                     },
@@ -51,7 +51,7 @@ const TodoListItemComponent = ({ id, text, completed }) => {
     const onEdit = async () => {
         try {
             await axios.put(
-                `http://localhost:5000/todos/update/${id}`,
+                `https://mern-crud-cv64.onrender.com/todos/update/${id}`,
                 {
                     text: updatedText,
                 },
@@ -75,11 +75,16 @@ const TodoListItemComponent = ({ id, text, completed }) => {
 
     const onDelete = async () => {
         try {
-            await axios.delete(`http://localhost:5000/todos/delete/${id}`, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`,
-                },
-            });
+            await axios.delete(
+                `https://mern-crud-cv64.onrender.com/todos/delete/${id}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem(
+                            "token"
+                        )}`,
+                    },
+                }
+            );
             toast.success("Todo deleted successfully!");
             setTimeout(() => {
                 window.location.reload();
