@@ -20,6 +20,9 @@ const Register = () => {
             });
 
             toast.success("Account created successfully!");
+            setTimeout(() => {
+                window.location.href = "/login";
+            }, 1000); // 1 seconds delay
         } catch (err) {
             toast.error(err.response.data.message);
             console.log(err);
