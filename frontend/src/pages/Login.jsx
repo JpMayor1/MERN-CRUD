@@ -18,10 +18,13 @@ const Login = () => {
 
         try {
             setIsLoading(true);
-            const res = await axios.post("http://localhost:5000/login", {
-                email,
-                password,
-            });
+            const res = await axios.post(
+                "https://jp-m-mern-crud.onrender.com/login",
+                {
+                    email,
+                    password,
+                }
+            );
 
             //dispatch username and token to redux store
             const username = res.data.username;

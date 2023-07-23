@@ -11,7 +11,7 @@ const AddTodo = () => {
     const addTodo = async () => {
         await axios
             .post(
-                `http://localhost:5000/todos/add`,
+                `https://jp-m-mern-crud.onrender.com/todos/add`,
                 {
                     todoId,
                     text,

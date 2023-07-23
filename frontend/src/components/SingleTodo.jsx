@@ -15,11 +15,15 @@ const SingleTodo = ({ id, text, completed }) => {
 
     const toggleCompleted = async () => {
         await axios
-            .put(`http://localhost:5000/todos/update/completed/${id}`, null, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
+            .put(
+                `https://jp-m-mern-crud.onrender.com/todos/update/completed/${id}`,
+                null,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            )
             .then((res) => console.log(res.data))
             .catch((err) => console.log(err));
         setIsCompleted(!isCompleted);
@@ -30,7 +34,7 @@ const SingleTodo = ({ id, text, completed }) => {
     const onEdit = async () => {
         await axios
             .put(
-                `http://localhost:5000/todos/update/${id}`,
+                `https://jp-m-mern-crud.onrender.com/todos/update/${id}`,
                 {
                     text: updatedText,
                 },
@@ -48,7 +52,7 @@ const SingleTodo = ({ id, text, completed }) => {
     };
     const onDelete = async () => {
         await axios
-            .delete(`http://localhost:5000/todos/delete/${id}`, {
+            .delete(`https://jp-m-mern-crud.onrender.com/todos/delete/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

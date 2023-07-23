@@ -16,8 +16,8 @@ const Register = () => {
         const password = e.target.password.value;
         const todoId = uuid();
         try {
-            setIsLoading(true)
-            await axios.post("http://localhost:5000/register", {
+            setIsLoading(true);
+            await axios.post("https://jp-m-mern-crud.onrender.com/register", {
                 username: name,
                 email,
                 password,

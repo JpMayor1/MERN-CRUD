@@ -16,7 +16,7 @@ const Todos = () => {
         setIsLoading(true);
         const getTodos = async () => {
             await axios
-                .get(`http://localhost:5000/todos/${todoId}`, {
+                .get(`https://jp-m-mern-crud.onrender.com/todos/${todoId}`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
