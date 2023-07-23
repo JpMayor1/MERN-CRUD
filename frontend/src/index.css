@@ -8,3 +8,29 @@ body {
     padding: 0;
     box-sizing: border-box;
 }
+
+.completed {
+    height: 20px;
+    width: 20px;
+    border-radius: 100%;
+    border: none;
+    background: linear-gradient(
+        180deg,
+        rgba(82, 255, 96, 1) 26%,
+        rgba(45, 255, 97, 1) 74%
+    );
+    cursor: pointer;
+}
+
+.not-completed {
+    height: 20px;
+    width: 20px;
+    border-radius: 100%;
+    border: none;
+    background: linear-gradient(
+        180deg,
+        rgba(246, 218, 255, 1) 26%,
+        rgba(233, 199, 245, 1) 74%
+    );
+    cursor: pointer;
+}

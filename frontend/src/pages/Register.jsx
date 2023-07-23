@@ -2,8 +2,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast, Toaster } from "react-hot-toast";
 import axios from "axios";
 import { v4 as uuid } from "uuid";
+import BeatLoader from "react-spinners/BeatLoader";
+import { useState } from "react";
 
 const Register = () => {
+    const [isloading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -13,6 +16,7 @@ const Register = () => {
         const password = e.target.password.value;
         const todoId = uuid();
         try {
+            setIsLoading(true)
             await axios.post("http://localhost:5000/register", {
                 username: name,
                 email,
@@ -27,6 +31,7 @@ const Register = () => {
         } catch (err) {
             toast.error(err.response.data.message);
             console.log(err);
+            setIsLoading(false);
         }
     };
 
@@ -106,7 +111,11 @@ const Register = () => {
                                     type="submit"
                                     className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-light-primary2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-light-primary2 bg-light-primary1"
                                 >
-                                    Sign up
+                                    {isloading ? (
+                                        <BeatLoader color="#36d7b7" />
+                                    ) : (
+                                        "Sign up"
+                                    )}
                                 </button>
                             </div>
                         </form>

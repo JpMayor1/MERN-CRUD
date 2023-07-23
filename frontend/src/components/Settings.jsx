@@ -5,7 +5,6 @@ import { MoonIcon, SunIcon } from "./icons";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../redux/store/userSlice";
 import { useNavigate } from "react-router-dom";
-import { logoutUserTodo } from "../redux/store/todoSlice";
 
 const Settings = () => {
     const dispatch = useDispatch();
@@ -13,10 +12,8 @@ const Settings = () => {
 
     const username = useSelector((state) => state.user.username);
     const logOut = () => {
-        window.localStorage.removeItem("token");
-        window.localStorage.removeItem("username");
         dispatch(logoutUser());
-        dispatch(logoutUserTodo());
+
         navigate("/login");
     };
     const [mode, setMode] = useThemeSwitcher();

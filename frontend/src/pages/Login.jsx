@@ -3,8 +3,11 @@ import { toast, Toaster } from "react-hot-toast";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setTodoId, setToken, setUsername } from "../redux/store/userSlice";
+import BeatLoader from "react-spinners/BeatLoader";
+import { useState } from "react";
 
 const Login = () => {
+    const [isloading, setIsLoading] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -13,8 +16,8 @@ const Login = () => {
         const email = e.target.email.value;
         const password = e.target.password.value;
 
-        //s://mern-crud-cv64.onrender.com
         try {
+            setIsLoading(true);
             const res = await axios.post("http://localhost:5000/login", {
                 email,
                 password,
@@ -24,19 +27,16 @@ const Login = () => {
             const username = res.data.username;
             const token = res.data.token;
             const todoId = res.data.todoId;
-            console.log(res.data);
 
             dispatch(setUsername(username));
             dispatch(setToken(token));
             dispatch(setTodoId(todoId));
 
-            localStorage.setItem("token", res.data.token);
-            localStorage.setItem("username", res.data.username);
-
             navigate("/");
         } catch (err) {
             toast.error(err.response.data.message);
             console.log(err);
+            setIsLoading(false);
         }
     };
 
@@ -97,7 +97,11 @@ const Login = () => {
                                     type="submit"
                                     className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-light-primary2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-light-primary2 bg-light-primary1"
                                 >
-                                    Sign in
+                                    {isloading ? (
+                                        <BeatLoader color="#36d7b7" />
+                                    ) : (
+                                        "Sign in"
+                                    )}
                                 </button>
                             </div>
                         </form>

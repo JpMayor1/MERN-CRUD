@@ -2,16 +2,17 @@ import Navbar from "../components/Navbar";
 import AddTodo from "../components/AddTodo";
 import Todos from "../components/Todos";
 import useThemeSwitcher from "../hooks/useThemeSwitches";
-
-const token = window.localStorage.getItem("token");
-if (!token) {
-    if (window.location.pathname === "/") {
-        window.location.href = "/login";
-    }
-}
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+    const token = useSelector((state) => state.user.token);
+    const navigate = useNavigate();
     useThemeSwitcher();
+
+    if (!token) {
+        navigate("/login");
+    }
 
     return (
         <>

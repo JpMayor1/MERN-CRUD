@@ -1,49 +1,65 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import { BiEditAlt, BiSave } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
 import { toast, Toaster } from "react-hot-toast";
-import {
-    updateTodoCompleted,
-    updateTodoText,
-    deleteTodo,
-} from "../redux/store/todoSlice";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 const SingleTodo = ({ id, text, completed }) => {
     const [updatedText, setUpdatedText] = useState(text);
+    const [prevtext, setPrevText] = useState(text);
     const [isEditing, setIsEditing] = useState(false);
-    const dispatch = useDispatch();
+    const [isCompleted, setIsCompleted] = useState(completed);
+    const token = useSelector((state) => state.user.token);
 
     const toggleCompleted = async () => {
-        const updatedTodo = {
-            id,
-            text,
-            completed: !completed,
-        };
+        await axios
+            .put(`http://localhost:5000/todos/update/completed/${id}`, null, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            .then((res) => console.log(res.data))
+            .catch((err) => console.log(err));
+        setIsCompleted(!isCompleted);
 
-        // Dispatch action to update the completed field in the Redux store
-        dispatch(updateTodoCompleted(updatedTodo));
-        toast.success("Todo updated!");
+        window.location.reload();
     };
 
     const onEdit = async () => {
-        const updatedTodo = {
-            id,
-            text: updatedText,
-            completed,
-        };
-
-        // Dispatch action to update the text field in the Redux store
-        dispatch(updateTodoText(updatedTodo));
+        await axios
+            .put(
+                `http://localhost:5000/todos/update/${id}`,
+                {
+                    text: updatedText,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            )
+            .then((res) => console.log(res.data))
+            .catch((err) => console.log(err));
+        setPrevText(updatedText); // Update the previous text
         setIsEditing(false); // Exit edit mode
         toast.success("Todo updated!");
     };
-
     const onDelete = async () => {
-        // Dispatch action to remove the todo from the Redux store
-        dispatch(deleteTodo(id));
-        toast.success("Todo deleted!");
+        await axios
+            .delete(`http://localhost:5000/todos/delete/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            .then(() => {
+                toast.success("Todo deleted!");
+                setTimeout(() => {
+                    window.location.reload();
+                }, 800);
+            })
+            .catch((err) => console.log(err));
     };
 
     return (
@@ -51,12 +67,13 @@ const SingleTodo = ({ id, text, completed }) => {
             {!isEditing ? (
                 // Display the todo text when not in edit mode
                 <div className="flex gap-2 items-center">
-                    <input
-                        type="checkbox"
-                        onChange={toggleCompleted}
-                        checked={completed}
-                    />
-                    <span>{text}</span>
+                    <div
+                        className={isCompleted ? "completed" : "not-completed"}
+                        onClick={toggleCompleted}
+                    ></div>
+                    <span className={isCompleted ? "line-through" : ""}>
+                        {prevtext}
+                    </span>
                 </div>
             ) : (
                 // Display the edit input field when in edit mode
@@ -64,7 +81,7 @@ const SingleTodo = ({ id, text, completed }) => {
                     type="text"
                     value={updatedText}
                     onChange={(e) => setUpdatedText(e.target.value)}
-                    className="w-[70%] bg-light-primary1 dark:bg-dark-primary1 focus:outline-none focus:ring focus:ring-light-primary1 dark:focus:outline-none dark:focus:ring dark:focus:ring-dark-primary1 border-l-0 border-t-0 border-r-0 border-b-2 dark:border-b-gradient-bg-dark2 border-b-dark"
+                    className={`w-[70%] bg-light-primary1 dark:bg-dark-primary1 focus:outline-none focus:ring focus:ring-light-primary1 dark:focus:outline-none dark:focus:ring dark:focus:ring-dark-primary1 border-l-0 border-t-0 border-r-0 border-b-2 dark:border-b-gradient-bg-dark2 border-b-dark`}
                 />
             )}
 

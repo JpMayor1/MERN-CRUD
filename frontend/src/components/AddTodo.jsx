@@ -1,24 +1,39 @@
 import { useState } from "react";
 import { toast, Toaster } from "react-hot-toast";
 import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { addNewTodo } from "../redux/store/todoSlice";
+import axios from "axios";
 
 const AddTodo = () => {
     const [text, setText] = useState("");
     const todoId = useSelector((state) => state.user.todoId);
+    const token = useSelector((state) => state.user.token);
 
-    const dispatch = useDispatch();
-
-    const addTodo = () => {
-        try {
-            dispatch(addNewTodo(todoId, text));
-            toast.success("Todo added!");
-            setText(""); // Clear the input field after adding the todo
-        } catch (error) {
-            console.log(error);
-            toast.error(error.response.data.message);
-        }
+    const addTodo = async () => {
+        await axios
+            .post(
+                `http://localhost:5000/todos/add`,
+                {
+                    todoId,
+                    text,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            )
+            .then(
+                () =>
+                    toast.success("Todo added!") &&
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 800)
+            )
+            .catch((err) =>
+                toast.error(err.response.data.message, {
+                    duration: 1000,
+                })
+            );
     };
 
     return (

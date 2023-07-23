@@ -52,14 +52,11 @@ module.exports.updateTodo = async (req, res) => {
 module.exports.updateTodoCompleted = async (req, res) => {
     try {
         const { _id } = req.params;
-        const { completed } = req.body;
-        const todo = await todoSchema.findOneAndUpdate(
-            {
-                _id,
-            },
-            { completed },
-            { new: true }
-        );
+
+        const todo = await todoSchema.findByIdAndUpdate(_id);
+        todo.completed = !todo.completed;
+        await todo.save();
+
         res.status(200).json({ message: "Todo Updated", todo });
     } catch (error) {
         console.log(error);
