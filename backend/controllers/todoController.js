@@ -4,6 +4,10 @@ const todoSchema = require("../models/TodoSchema");
 module.exports.addTodo = async (req, res) => {
     try {
         const { todoId, text } = req.body;
+        const hasText = await todoSchema.findOne({ text });
+        if (hasText) {
+            return res.status(400).json({ message: "Todo already exists" });
+        }
         const todo = await todoSchema.create({ todoId, text });
         res.status(201).json(todo);
     } catch (error) {

@@ -1,10 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast, Toaster } from "react-hot-toast";
 import axios from "axios";
 import { v4 as uuid } from "uuid";
 
 const Register = () => {
-    const isLoggedIn = localStorage.getItem("userId");
+    const navigate = useNavigate();
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const name = e.target.name.value;
@@ -12,21 +13,19 @@ const Register = () => {
         const password = e.target.password.value;
         const todoId = uuid();
         try {
-            await axios.post("https://mern-crud-cv64.onrender.com/register", {
+            await axios.post("http://localhost:5000/register", {
                 username: name,
                 email,
                 password,
                 todoId,
             });
-
+            navigate("/login");
             toast.success("Account created successfully!");
         } catch (err) {
             toast.error(err.response.data.message);
             console.log(err);
         }
     };
-
-    if (isLoggedIn) window.location.href = "/";
 
     return (
         <>

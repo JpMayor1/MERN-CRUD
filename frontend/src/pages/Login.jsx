@@ -1,24 +1,39 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast, Toaster } from "react-hot-toast";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { setTodoId, setToken, setUsername } from "../redux/store/userSlice";
 
 const Login = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const email = e.target.email.value;
         const password = e.target.password.value;
+
+        //s://mern-crud-cv64.onrender.com
         try {
-            const res = await axios.post(
-                "https://mern-crud-cv64.onrender.com/login",
-                {
-                    email,
-                    password,
-                }
-            );
+            const res = await axios.post("http://localhost:5000/login", {
+                email,
+                password,
+            });
+
+            //dispatch username and token to redux store
+            const username = res.data.username;
+            const token = res.data.token;
+            const todoId = res.data.todoId;
+            console.log(res.data);
+
+            dispatch(setUsername(username));
+            dispatch(setToken(token));
+            dispatch(setTodoId(todoId));
 
             localStorage.setItem("token", res.data.token);
             localStorage.setItem("username", res.data.username);
-            window.location.href = "/";
+
+            navigate("/");
         } catch (err) {
             toast.error(err.response.data.message);
             console.log(err);

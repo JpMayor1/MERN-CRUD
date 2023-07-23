@@ -1,59 +1,23 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toast, Toaster } from "react-hot-toast";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { addNewTodo } from "../redux/store/todoSlice";
 
-const TodoComponent = () => {
-    const [todoId, setTodoId] = useState("");
+const AddTodo = () => {
     const [text, setText] = useState("");
+    const todoId = useSelector((state) => state.user.todoId);
 
-    useEffect(() => {
-        const username = localStorage.getItem("username");
+    const dispatch = useDispatch();
 
-        const getTodoId = async () => {
-            try {
-                await axios
-                    .get(
-                        `https://mern-crud-cv64.onrender.com/user/${username}`,
-                        {
-                            headers: {
-                                Authorization: `Bearer ${localStorage.getItem(
-                                    "token"
-                                )}`,
-                            },
-                        }
-                    )
-                    .then((res) => {
-                        setTodoId(res.data);
-                    });
-            } catch (error) {
-                console.log(error);
-            }
-        };
-        getTodoId();
-    }, []);
-
-    const addTodo = async () => {
+    const addTodo = () => {
         try {
-            await axios.post(
-                "https://mern-crud-cv64.onrender.com/todos/add",
-                {
-                    todoId,
-                    text,
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem(
-                            "token"
-                        )}`,
-                    },
-                }
-            );
+            dispatch(addNewTodo(todoId, text));
             toast.success("Todo added!");
-            setTimeout(() => {
-                window.location.reload();
-            }, 1000); // 1 seconds delay
+            setText(""); // Clear the input field after adding the todo
         } catch (error) {
             console.log(error);
+            toast.error(error.response.data.message);
         }
     };
 
@@ -96,4 +60,4 @@ const TodoComponent = () => {
     );
 };
 
-export default TodoComponent;
+export default AddTodo;

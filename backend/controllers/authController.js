@@ -47,9 +47,10 @@ module.exports.loginUser = async (req, res) => {
 
         // Create token
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-
         const username = user.username;
-        res.json({ token, username });
+        const todoId = user.todoId;
+        
+        res.json({ token, username, todoId });
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: "Error Logging In User" });

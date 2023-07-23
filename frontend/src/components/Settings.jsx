@@ -2,15 +2,25 @@ import { CgProfile } from "react-icons/cg";
 import { PiSignOutBold } from "react-icons/pi";
 import useThemeSwitcher from "../hooks/useThemeSwitches";
 import { MoonIcon, SunIcon } from "./icons";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutUser } from "../redux/store/userSlice";
+import { useNavigate } from "react-router-dom";
+import { logoutUserTodo } from "../redux/store/todoSlice";
 
 const Settings = () => {
-    const username = localStorage.getItem("username");
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const username = useSelector((state) => state.user.username);
     const logOut = () => {
         window.localStorage.removeItem("token");
         window.localStorage.removeItem("username");
-        window.location.href = "/login";
+        dispatch(logoutUser());
+        dispatch(logoutUserTodo());
+        navigate("/login");
     };
     const [mode, setMode] = useThemeSwitcher();
+
     return (
         <div className="absolute bg-light-primary2 dark:bg-dark-primary1 py-3 px-9 flex flex-col top-7 right-3 rounded-lg rounded-tr-none gap-2 w-48 items-start text-dark">
             <div className="flex justify-start items-center">
