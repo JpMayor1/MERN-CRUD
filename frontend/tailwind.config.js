@@ -11,7 +11,7 @@ export default {
             "gradient-bg-light1": "#8294C4",
             "gradient-bg-light2": "#DAF5FF",
             "light-primary1": "#54DDE6",
-            "light-primary2": "#FAF0D7",
+            "light-primary2": "#F9F9F9",
 
             "gradient-bg-dark1": "#810CA8",
             "gradient-bg-dark2": "#2D033B",

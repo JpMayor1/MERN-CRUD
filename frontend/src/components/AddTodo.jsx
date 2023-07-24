@@ -69,6 +69,7 @@ const AddTodo = () => {
                             color: "white",
                         },
                     },
+                    position: "bottom-center",
                 }}
             />
         </div>

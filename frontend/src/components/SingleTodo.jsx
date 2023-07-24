@@ -124,6 +124,7 @@ const SingleTodo = ({ id, text, completed }) => {
                             color: "white",
                         },
                     },
+                    position: "bottom-center",
                 }}
             />
         </li>

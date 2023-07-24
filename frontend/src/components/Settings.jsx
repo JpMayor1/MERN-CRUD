@@ -25,8 +25,8 @@ const Settings = () => {
                     onClick={() => setMode(mode === "light" ? "dark" : "light")}
                     className={`rounded-full p-1 ${
                         mode === "light"
-                            ? "bg-dark text-light"
-                            : "bg-light text-dark"
+                            ? "bg-dark-primary1 text-light-primary1"
+                            : "bg-light-primary1 text-dark-primary1"
                     }`}
                 >
                     {mode === "dark" ? (
